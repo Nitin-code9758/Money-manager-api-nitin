@@ -17,13 +17,29 @@ public class EmailService {
 
     public void sendEmail(String to, String subject, String body) {
 
-        SimpleMailMessage message = new SimpleMailMessage();
+        System.out.println("========== EMAIL DEBUG ==========");
+        System.out.println("To: " + to);
+        System.out.println("From: " + fromEmail);
 
-        message.setFrom(fromEmail);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(body);
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
 
-        mailSender.send(message);
+            message.setFrom(fromEmail);
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(body);
+
+            System.out.println("Calling mailSender.send()...");
+
+            mailSender.send(message);
+
+            System.out.println("EMAIL SENT SUCCESSFULLY");
+
+        } catch (Exception e) {
+            System.out.println("========== EMAIL ERROR ==========");
+            e.printStackTrace();
+            System.out.println("=================================");
+            throw new RuntimeException("Failed to send activation email", e);
+        }
     }
 }
